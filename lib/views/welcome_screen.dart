@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_veg/services/preference.services.dart';
+import 'package:recipe_veg/views/recipes_screen.dart';
 import 'package:recipe_veg/views/signInscreen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -22,24 +24,23 @@ class WelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
-                    padding:  EdgeInsets.only(right: 8.0,left: 8),
-                    child: ClipRRect(borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                   topRight: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0),
-                      topLeft: Radius.circular(20.0),
-                    ),
+                    padding: EdgeInsets.only(right: 8.0, left: 8),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.0),
+                        topRight: Radius.circular(20.0),
+                        bottomRight: Radius.circular(20.0),
+                        topLeft: Radius.circular(20.0),
+                      ),
                       child: Image(
                           image: AssetImage(
                         'assets/images/pic1.jpg',
                       )),
                     ),
                   ),
-
                   SizedBox(
                     height: 10,
                   ),
-
                   Text(
                     "Welcome to be Veggin",
                     style: TextStyle(
@@ -53,12 +54,23 @@ class WelcomeScreen extends StatelessWidget {
                   Container(
                     width: 220,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SignInScreen(),
-                            ));
+                      onPressed: () async {
+                        if (PreferencService.isLoggedIn()) {
+                          var email = await PreferencService.loginData();
+                          print("output======> $email ========>");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RecipesScreen(),
+                              ));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignInScreen(),
+                              ));
+                        }
+
                       },
                       child: Padding(
                         padding: EdgeInsets.all(10.0),

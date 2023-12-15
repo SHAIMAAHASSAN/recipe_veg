@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_veg/services/preference.services.dart';
+import 'package:recipe_veg/views/recipes_screen.dart';
 import 'package:recipe_veg/views/signUpscreen.dart';
 import 'package:recipe_veg/views/welcome_screen.dart';
 
@@ -99,8 +101,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               },
                               icon: Icon(
                                 obscureText
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
                               )),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -122,12 +124,23 @@ class _SignInScreenState extends State<SignInScreen> {
                         if (_formKey.currentState!.validate()) {
                           // Sign in the user with Firebase Authentication.
 
+                          //Save the userData with SharedPreference
+                          PreferencService.saveLoginData(
+                              _emailController.text, _passwordController.text);
+
+                          if (PreferencService.isLoggedIn()) {
+                            var email = await PreferencService.loginData();
+                            print("output======> $email ========>");
+                          }
+
                           // Navigate to the next screen.
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => WelcomeScreen(),
+                                builder: (context) => RecipesScreen(),
                               ));
+                          var email = await PreferencService.loginData();
+                          print("output======> $email ========>");
                           _emailController.clear();
                           _passwordController.clear();
                         }

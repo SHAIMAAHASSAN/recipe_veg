@@ -80,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: !obscureText,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
-                      icon: Icon( obscureText ? Icons.visibility_off : Icons.visibility,),
+                      icon: Icon( obscureText ? Icons.visibility : Icons.visibility_off,),
                       onPressed: () {
                         setState(() {
 

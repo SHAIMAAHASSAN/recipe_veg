@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_veg/services/preference.services.dart';
+import 'package:recipe_veg/views/signInscreen.dart';
 import 'package:recipe_veg/views/welcome_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+
+    if (PreferencService.initPrefs() != null) {
+      print("========> Sucessful Run =======>");
+    }
+  } catch (e) {
+    print("============> Exception error $e ==========>");
+  }
+  ;
   runApp(const MyApp());
 }
 
@@ -85,11 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title,style: TextStyle(fontSize: 25),),
+        title: Text(
+          widget.title,
+          style: TextStyle(fontSize: 25),
+        ),
       ),
       body: WelcomeScreen(),
-
-      ) // This trailing comma makes auto-formatting nicer for build methods.
-    ;
+    ) // This trailing comma makes auto-formatting nicer for build methods.
+        ;
   }
 }
