@@ -10,9 +10,19 @@ class RecipesScreen extends StatefulWidget {
 }
 
 class _RecipesScreenState extends State<RecipesScreen> {
+
+   getEmail() async {
+    String email = await PreferencService.loginData();
+    print("email:$email" );
+    return (email.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
+
         appBar: AppBar(
           title: Text("Recipes"),
           actions: [
@@ -40,7 +50,8 @@ class _RecipesScreenState extends State<RecipesScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          //child: Center(child: Text(""),),
-        ));
+
+          child: Center(child: Text(getEmail().toString()),
+        )));
   }
 }
